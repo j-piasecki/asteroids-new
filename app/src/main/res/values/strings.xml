@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Asteroids</string>
+    <string name="button_start">Start</string>
+    <string name="tap_anywhere_to_play_again">Tap anywhere to play again</string>
+</resources>
