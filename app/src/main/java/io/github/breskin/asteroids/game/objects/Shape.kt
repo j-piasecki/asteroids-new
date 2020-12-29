@@ -1,9 +1,7 @@
-package io.github.breskin.asteroids.objects
+package io.github.breskin.asteroids.game.objects
 
 import android.graphics.PointF
 import io.github.breskin.asteroids.Utils.rotatePoint
-import io.github.breskin.asteroids.controls.Vector
-import kotlin.math.*
 
 interface Shape {
     val points: MutableList<PointF>

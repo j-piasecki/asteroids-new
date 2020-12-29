@@ -1,8 +1,7 @@
-package io.github.breskin.asteroids.objects
+package io.github.breskin.asteroids.game.objects
 
 import android.graphics.*
 import android.os.Build
-import android.util.Log
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.game.GameLogic
 import io.github.breskin.asteroids.game.PowerState

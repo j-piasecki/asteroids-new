@@ -4,9 +4,9 @@ import android.graphics.Canvas
 import android.graphics.PointF
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.controls.Vector
-import io.github.breskin.asteroids.objects.Asteroid
-import io.github.breskin.asteroids.objects.Bullet
-import io.github.breskin.asteroids.objects.PowerUp
+import io.github.breskin.asteroids.game.objects.Asteroid
+import io.github.breskin.asteroids.game.objects.Bullet
+import io.github.breskin.asteroids.game.objects.PowerUp
 import kotlin.random.Random
 
 class Space(val width: Int, val height: Int) {

@@ -2,13 +2,12 @@ package io.github.breskin.asteroids.game
 
 import android.graphics.Canvas
 import android.graphics.PointF
-import android.util.Log
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.Utils
 import io.github.breskin.asteroids.controls.Vector
-import io.github.breskin.asteroids.objects.Asteroid
-import io.github.breskin.asteroids.objects.Bullet
-import io.github.breskin.asteroids.objects.Ship
+import io.github.breskin.asteroids.game.objects.Asteroid
+import io.github.breskin.asteroids.game.objects.Bullet
+import io.github.breskin.asteroids.game.objects.Ship
 import kotlin.math.sqrt
 
 class Player {

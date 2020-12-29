@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.graphics.PointF
 import android.view.MotionEvent
 import io.github.breskin.asteroids.GameView
-import io.github.breskin.asteroids.objects.Ship
+import io.github.breskin.asteroids.game.objects.Ship
 import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.sqrt

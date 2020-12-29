@@ -3,12 +3,10 @@ package io.github.breskin.asteroids
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowId
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import io.github.breskin.asteroids.game.PowerState
-import io.github.breskin.asteroids.objects.PowerUp
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

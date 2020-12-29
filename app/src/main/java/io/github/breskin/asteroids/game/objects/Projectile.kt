@@ -1,4 +1,4 @@
-package io.github.breskin.asteroids.objects
+package io.github.breskin.asteroids.game.objects
 
 import android.graphics.Canvas
 import android.graphics.PointF

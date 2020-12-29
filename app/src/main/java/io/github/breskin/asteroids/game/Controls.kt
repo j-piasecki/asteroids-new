@@ -6,7 +6,6 @@ import android.view.MotionEvent
 import io.github.breskin.asteroids.Config
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.controls.Joystick
-import io.github.breskin.asteroids.objects.Ship
 import kotlin.math.abs
 
 class Controls {

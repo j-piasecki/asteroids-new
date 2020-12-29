@@ -1,9 +1,6 @@
-package io.github.breskin.asteroids.objects
+package io.github.breskin.asteroids.game.objects
 
 import android.graphics.*
-import android.util.Log
-import io.github.breskin.asteroids.GameView
-import io.github.breskin.asteroids.game.GameLogic
 
 
 class Ship : Shape {
