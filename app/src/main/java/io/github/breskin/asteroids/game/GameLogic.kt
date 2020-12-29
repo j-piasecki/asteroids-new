@@ -15,10 +15,16 @@ class GameLogic(val particleSystem: ParticleSystem) {
     var score = 0
 
     var gameFinished = false
+    var gamePaused = false
 
     fun update() {
         player.update(this)
         space.update(this)
+
+        if (gamePaused)
+            speed -= speed * 0.15f
+        else
+            speed += (1 - speed) * 0.1f
 
         gameTime += GameView.frameTime * speed
     }
@@ -32,15 +38,18 @@ class GameLogic(val particleSystem: ParticleSystem) {
 
     fun reset() {
         player.reset()
+        space.clear(this, false)
 
         gameTime = 0f
         gameFinished = false
+        gamePaused = false
         score = 0
     }
 
     fun finishGame() {
         if (!gameFinished) {
             gameFinished = true
+            speed = 1f
 
             player.explode(this)
             space.clear(this)

@@ -34,7 +34,7 @@ class ScoreScreen(screenManager: ScreenManager) : Screen(screenManager) {
     }
 
     override fun draw(canvas: Canvas) {
-        paint.color = Color.WHITE
+        paint.color = Color.rgb(220, 220, 220)
         paint.textSize = GameView.size * 0.1f * (scoreAnimationProgress + 1)
         canvas.drawText(score.toString(), (GameView.viewWidth - paint.measureText(score.toString())) * 0.5f, paint.textSize * (scoreAnimationProgress * 0.5f + 1) * 1.1f - scoreTranslation, paint)
 
