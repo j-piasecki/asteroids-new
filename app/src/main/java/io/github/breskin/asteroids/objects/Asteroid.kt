@@ -35,6 +35,19 @@ class Asteroid(position: PointF, direction: Vector, speed: Float, val radius: Fl
 
         rotation += rotationSpeed * GameView.frameTime / 16f * logic.speed
 
+        for (bullet in logic.space.bullets) {
+            val head = bullet.getHead()
+            if (bullet.exists && radius * radius * 1.2f >= (position.x - head.x) * (position.x - head.x) + (position.y - head.y) * (position.y - head.y)) {
+                if (containsPoint(head, rotation, position) || containsPoint(bullet.position, rotation, position)) {
+                    destroy()
+                    bullet.destroy()
+
+                    explode(logic)
+                    break
+                }
+            }
+        }
+
         if (position.x < -logic.space.width * 0.5f - radius * 2 || position.x > logic.space.width * 0.5f + radius * 2 ||
                 position.y < -logic.space.height * 0.5f - radius * 2 || position.y > logic.space.height * 0.5f + radius * 2)
             destroy()
@@ -81,8 +94,12 @@ class Asteroid(position: PointF, direction: Vector, speed: Float, val radius: Fl
         path.close()
     }
 
-    fun explode(logic: GameLogic) {
+    fun explode(logic: GameLogic, drop: Boolean = true, split: Boolean = true, sound: Boolean = true) {
         val timeMultiplier = 0.95f.pow(logic.gameTime / 20000 + 1)
+
+        if (drop) {
+            logic.score++
+        }
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
             logic.particleSystem.createInPoint(position, GameView.size * 0.015f + radius * 0.1f, (radius / (GameView.size * 0.3f) * 20 * timeMultiplier).roundToInt(), 330, 330, 330)

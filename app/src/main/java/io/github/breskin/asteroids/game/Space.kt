@@ -6,12 +6,14 @@ import android.util.Log
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.objects.Asteroid
+import io.github.breskin.asteroids.objects.Bullet
 import kotlin.random.Random
 
 class Space(val width: Int, val height: Int) {
 
     private var counter = 0
     val asteroids = mutableListOf<Asteroid>()
+    val bullets = mutableListOf<Bullet>()
 
     fun update(logic: GameLogic) {
         if (counter == 0) {
@@ -22,20 +24,27 @@ class Space(val width: Int, val height: Int) {
 
         counter--
 
-        for (asteroid in asteroids) {
+        for (asteroid in asteroids)
             asteroid.update(logic)
-        }
 
-        asteroids.removeAll {
-            !it.exists
-        }
+        asteroids.removeAll { !it.exists }
+
+        for (bullet in bullets)
+            bullet.update(logic)
+
+        bullets.removeAll { !it.exists }
     }
 
     fun clear(logic: GameLogic, explode: Boolean = true) {
         if (explode)
-            asteroids.forEach { it.explode(logic) }
+            asteroids.forEach { it.explode(logic, drop = false, split = false, sound = false) }
 
         asteroids.clear()
+        bullets.clear()
+    }
+
+    fun addBullet(bullet: Bullet) {
+        bullets.add(bullet)
     }
 
     private fun spawnAsteroid() {
@@ -101,6 +110,10 @@ class Space(val width: Int, val height: Int) {
     }
 
     fun draw(canvas: Canvas, logic: GameLogic) {
+        for (bullet in bullets) {
+            bullet.draw(canvas, logic)
+        }
+
         for (asteroid in asteroids) {
             asteroid.draw(canvas, logic)
         }

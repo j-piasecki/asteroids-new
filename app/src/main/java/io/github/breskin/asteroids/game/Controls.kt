@@ -20,6 +20,10 @@ class Controls {
     val isMoving: Boolean
         get() = moveJoystick.active || doubleJoystick.active
 
+    init {
+        shootJoystick.flat = true
+    }
+
     fun update() {
         moveJoystick.origin = PointF(origin - translation, moveJoystick.origin.y)
         shootJoystick.origin = PointF(GameView.viewWidth - origin + translation, moveJoystick.origin.y)
@@ -43,6 +47,11 @@ class Controls {
                 player.velocity.y = doubleJoystick.vector.y
 
                 player.ship.rotation = doubleJoystick.angle
+
+                player.shooting = true
+                player.shootingDirection = doubleJoystick.vector.normalized
+            } else {
+                player.shooting = false
             }
         } else {
             if (moveJoystick.active) {
@@ -50,6 +59,14 @@ class Controls {
                 player.velocity.y = moveJoystick.vector.y
 
                 player.ship.rotation = moveJoystick.angle
+            }
+
+            if (shootJoystick.active) {
+                player.shootingDirection = shootJoystick.vector
+                player.shooting = true
+                player.ship.rotation = shootJoystick.angle
+            } else {
+                player.shooting = false
             }
         }
     }

@@ -4,7 +4,10 @@ import android.graphics.Canvas
 import android.graphics.PointF
 import android.util.Log
 import io.github.breskin.asteroids.GameView
+import io.github.breskin.asteroids.Utils
+import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.objects.Asteroid
+import io.github.breskin.asteroids.objects.Bullet
 import io.github.breskin.asteroids.objects.Ship
 
 class Player {
@@ -12,6 +15,10 @@ class Player {
 
     val position = PointF(0f, 0f)
     val velocity = PointF(0f, 0f)
+
+    var shootingDirection = Vector(0f, 0f)
+    var shooting = false
+    private var shootTime = 0L
 
     fun draw(canvas: Canvas) {
         ship.draw(canvas)
@@ -41,6 +48,30 @@ class Player {
 
         ship.position = logic.camera.getShipPosition(logic)
         checkAsteroidsCollision(logic)
+
+        if (shooting)
+            shoot(logic)
+    }
+
+    fun shoot(logic: GameLogic): Boolean {
+        if (System.currentTimeMillis() - shootTime > 250 && (shootingDirection.x != 0f || shootingDirection.y != 0f)) {
+            val origin = PointF(position.x, position.y - ship.size * 0.5f * ship.scale)
+            Utils.rotatePoint(position.x, position.y, ship.rotation, origin)
+
+            logic.space.addBullet(
+                    Bullet(
+                            PointF(origin.x, origin.y),
+                            shootingDirection,
+                            ship.size * 0.1f,
+                            15f
+                    )
+            )
+
+            shootTime = System.currentTimeMillis()
+            return true
+        }
+
+        return false
     }
 
     fun reset() {
