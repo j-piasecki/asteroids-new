@@ -53,7 +53,7 @@ class Player {
             shoot(logic)
     }
 
-    fun shoot(logic: GameLogic): Boolean {
+    private fun shoot(logic: GameLogic): Boolean {
         if (System.currentTimeMillis() - shootTime > 250 && (shootingDirection.x != 0f || shootingDirection.y != 0f)) {
             val origin = PointF(position.x, position.y - ship.size * 0.5f * ship.scale)
             Utils.rotatePoint(position.x, position.y, ship.rotation, origin)
@@ -80,6 +80,9 @@ class Player {
 
         velocity.x = 0f
         velocity.y = 0f
+
+        shooting = false
+        shootingDirection = Vector(0f, 0f)
 
         ship.position.x = 0f
         ship.position.y = 0f

@@ -12,6 +12,7 @@ import kotlin.random.Random
 class Space(val width: Int, val height: Int) {
 
     private var counter = 0
+    private val asteroidsToAdd = mutableListOf<Asteroid>()
     val asteroids = mutableListOf<Asteroid>()
     val bullets = mutableListOf<Bullet>()
 
@@ -27,6 +28,9 @@ class Space(val width: Int, val height: Int) {
         for (asteroid in asteroids)
             asteroid.update(logic)
 
+        asteroids.addAll(asteroidsToAdd)
+        asteroidsToAdd.clear()
+
         asteroids.removeAll { !it.exists }
 
         for (bullet in bullets)
@@ -41,6 +45,10 @@ class Space(val width: Int, val height: Int) {
 
         asteroids.clear()
         bullets.clear()
+    }
+
+    fun addAsteroid(asteroid: Asteroid) {
+        asteroidsToAdd.add(asteroid)
     }
 
     fun addBullet(bullet: Bullet) {
@@ -74,7 +82,7 @@ class Space(val width: Int, val height: Int) {
                 position.x = width * 0.5f + radius
                 position.y = (if (fromTop) -height * 0.5f else height * 0.5f) * Random.nextFloat()
 
-                direction.x = Random.nextFloat() * 6 + 1
+                direction.x = -Random.nextFloat() * 6 + 1
                 direction.y = Random.nextFloat() * 2 + 1
                 if (!fromTop)
                     direction.y *= -1

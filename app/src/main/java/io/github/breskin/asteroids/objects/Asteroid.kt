@@ -4,6 +4,7 @@ import android.graphics.*
 import android.os.Build
 import android.util.Log
 import io.github.breskin.asteroids.GameView
+import io.github.breskin.asteroids.Utils
 import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.game.GameLogic
 import kotlin.math.*
@@ -101,9 +102,35 @@ class Asteroid(position: PointF, direction: Vector, speed: Float, val radius: Fl
             logic.score++
         }
 
+        if (split && radius * 0.65f > GameView.size * 0.06f) {
+            spawn(logic)
+        }
+
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
             logic.particleSystem.createInPoint(position, GameView.size * 0.015f + radius * 0.1f, (radius / (GameView.size * 0.3f) * 20 * timeMultiplier).roundToInt(), 330, 330, 330)
         else
             logic.particleSystem.createInPoint(position, GameView.size * 0.015f + radius * 0.1f, (radius / (GameView.size * 0.3f) * 8 * timeMultiplier).roundToInt(), 330, 330, 330)
+    }
+
+    private fun spawn(logic: GameLogic) {
+        val angle = Math.PI.toFloat() / 6 * (1 + Random.nextFloat())
+        var newDirection = Utils.rotateVector(direction, angle)
+        var newRadius = radius * (Random.nextFloat() * 0.25f + 0.5f)
+
+        logic.space.addAsteroid(Asteroid(
+                PointF(position.x, position.y),
+                Vector(newDirection.x, newDirection.y),
+                GameView.size / newRadius * GameView.size * 0.0005f * (Random.nextFloat() * 0.25f + 0.75f),
+                newRadius
+        ))
+
+        newRadius = radius * (Random.nextFloat() * 0.25f + 0.5f)
+        newDirection = Utils.rotateVector(direction, -angle)
+        logic.space.addAsteroid(Asteroid(
+                PointF(position.x, position.y),
+                Vector(newDirection.x, newDirection.y),
+                GameView.size / newRadius * GameView.size * 0.0005f * (Random.nextFloat() * 0.25f + 0.75f),
+                newRadius
+        ))
     }
 }
