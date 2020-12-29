@@ -39,7 +39,7 @@ class StartButton(private val callback: () -> Unit) {
         canvas.drawCircle(position.x, position.y, radius, paint)
 
         paint.color = Color.BLACK
-        canvas.drawText(text, (GameView.viewWidth - paint.measureText(text)) * 0.5f, GameView.viewHeight * 0.5f + paint.textSize + ship.size * ship.scale * 0.5f, paint)
+        canvas.drawText(text, (GameView.viewWidth - paint.measureText(text)) * 0.5f, GameView.viewHeight * 0.5f + paint.textSize + ship.size * ship.scale * 0.5f + GameView.size * 0.32f - radius, paint)
 
         ship.draw(canvas)
     }
