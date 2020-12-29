@@ -20,7 +20,7 @@ abstract class Projectile(val position: PointF, protected val direction: Vector,
 
     abstract fun draw(canvas: Canvas, logic: GameLogic)
 
-    fun destroy() {
+    open fun destroy() {
         toDelete = true
     }
 }

@@ -8,7 +8,7 @@ import android.os.Build
 import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.game.GameLogic
 
-open class Bullet(position: PointF, direction: Vector, protected val size: Float, speed: Float) : Projectile(position, direction, speed) {
+class PiercingBullet(position: PointF, direction: Vector, size: Float, speed: Float) : Bullet(position, direction, size, speed) {
 
     companion object {
         private val paint = Paint()
@@ -19,17 +19,16 @@ open class Bullet(position: PointF, direction: Vector, protected val size: Float
         }
     }
 
-    override fun update(logic: GameLogic) {
-        super.update(logic)
-
-        if (position.x < -logic.space.width * 0.5f - 100 || position.x > logic.space.width * 0.5f + 100 ||
-                position.y < -logic.space.height * 0.5f - 100 || position.y > logic.space.height * 0.5f + 100)
-            destroy()
-    }
+    private var secondHit = false
 
     override fun draw(canvas: Canvas, logic: GameLogic) {
+        if (secondHit) {
+            super.draw(canvas, logic)
+            return
+        }
+
         paint.strokeWidth = size
-        paint.color = Color.RED
+        paint.color = Color.CYAN
 
         val position = logic.camera.translatePosition(logic, position)
         val head = getHead(position)
@@ -37,5 +36,10 @@ open class Bullet(position: PointF, direction: Vector, protected val size: Float
         canvas.drawLine(position.x, position.y, head.x, head.y, paint)
     }
 
-    fun getHead(position: PointF = this.position) = PointF(position.x + direction.x * size * 6, position.y + direction.y * size * 6)
+    override fun destroy() {
+        if (!secondHit)
+            secondHit = true
+        else
+            super.destroy()
+    }
 }
