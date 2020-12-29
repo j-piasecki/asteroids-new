@@ -65,14 +65,19 @@ class Player {
             val origin = PointF(position.x, position.y - ship.size * 0.5f * ship.scale)
             Utils.rotatePoint(position.x, position.y, ship.rotation, origin)
 
-            logic.space.addBullet(
+            val anglePerBullet = powerState.anglePerBullet
+            val startAngle = (powerState.bulletSpray - (powerState.bullets - 1) * anglePerBullet) / 2 - powerState.bulletSpray / 2
+
+            for (i in 0 until powerState.bullets) {
+                logic.space.addBullet(
                     Bullet(
-                            PointF(origin.x, origin.y),
-                            shootingDirection,
-                            ship.size * 0.1f,
-                            speed * 3 * powerState.bulletSpeedMultiplier
+                        PointF(origin.x, origin.y),
+                        Utils.rotateVector(shootingDirection, -(anglePerBullet * i + startAngle) * Math.PI.toFloat() / 180f),
+                        ship.size * 0.1f,
+                        speed * 3 * powerState.bulletSpeedMultiplier
                     )
-            )
+                )
+            }
 
             shootTime = System.currentTimeMillis()
             return true
