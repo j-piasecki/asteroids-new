@@ -7,6 +7,7 @@ import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.Utils
 import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.game.GameLogic
+import io.github.breskin.asteroids.game.PowerState
 import kotlin.math.*
 import kotlin.random.Random
 
@@ -100,6 +101,12 @@ class Asteroid(position: PointF, direction: Vector, speed: Float, val radius: Fl
 
         if (drop) {
             logic.score++
+
+            var power = Random.nextInt(PowerState.Power.AMOUNT)
+            while (!logic.player.powerState.canUse(PowerState.Power.get(power)))
+                power = (power + 1) % PowerState.Power.AMOUNT
+
+            logic.space.addPowerUp(PowerUp(PointF(position.x, position.y), PowerState.Power.get(power)))
         }
 
         if (split && radius * 0.65f > GameView.size * 0.06f) {

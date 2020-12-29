@@ -2,11 +2,11 @@ package io.github.breskin.asteroids.game
 
 import android.graphics.Canvas
 import android.graphics.PointF
-import android.util.Log
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.objects.Asteroid
 import io.github.breskin.asteroids.objects.Bullet
+import io.github.breskin.asteroids.objects.PowerUp
 import kotlin.random.Random
 
 class Space(val width: Int, val height: Int) {
@@ -15,6 +15,7 @@ class Space(val width: Int, val height: Int) {
     private val asteroidsToAdd = mutableListOf<Asteroid>()
     val asteroids = mutableListOf<Asteroid>()
     val bullets = mutableListOf<Bullet>()
+    val powerUps = mutableListOf<PowerUp>()
 
     fun update(logic: GameLogic) {
         if (counter == 0) {
@@ -37,6 +38,11 @@ class Space(val width: Int, val height: Int) {
             bullet.update(logic)
 
         bullets.removeAll { !it.exists }
+
+        for (powerUp in powerUps)
+            powerUp.update(logic)
+
+        powerUps.removeAll { it.expired && !it.picked }
     }
 
     fun clear(logic: GameLogic, explode: Boolean = true) {
@@ -45,6 +51,7 @@ class Space(val width: Int, val height: Int) {
 
         asteroids.clear()
         bullets.clear()
+        powerUps.clear()
     }
 
     fun addAsteroid(asteroid: Asteroid) {
@@ -53,6 +60,10 @@ class Space(val width: Int, val height: Int) {
 
     fun addBullet(bullet: Bullet) {
         bullets.add(bullet)
+    }
+
+    fun addPowerUp(powerUp: PowerUp) {
+        powerUps.add(powerUp)
     }
 
     private fun spawnAsteroid() {
@@ -118,6 +129,10 @@ class Space(val width: Int, val height: Int) {
     }
 
     fun draw(canvas: Canvas, logic: GameLogic) {
+        for (powerUp in powerUps) {
+            powerUp.draw(canvas, logic)
+        }
+
         for (bullet in bullets) {
             bullet.draw(canvas, logic)
         }

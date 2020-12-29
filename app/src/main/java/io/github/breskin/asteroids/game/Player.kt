@@ -9,9 +9,13 @@ import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.objects.Asteroid
 import io.github.breskin.asteroids.objects.Bullet
 import io.github.breskin.asteroids.objects.Ship
+import kotlin.math.sqrt
 
 class Player {
+    private var speed = 10f
+
     val ship = Ship()
+    val powerState = PowerState()
 
     val position = PointF(0f, 0f)
     val velocity = PointF(0f, 0f)
@@ -28,11 +32,13 @@ class Player {
         if (logic.gameFinished)
             return
 
-        position.x += velocity.x * 10 * logic.speed
-        position.y += velocity.y * 10 * logic.speed
+        position.x += velocity.x * speed * powerState.speedMultiplier * logic.speed
+        position.y += velocity.y * speed * powerState.speedMultiplier * logic.speed
 
         velocity.x *= 0.8f
         velocity.y *= 0.8f
+
+        ship.scale += (powerState.scale - ship.scale) * 0.1f
 
         if (position.x < -logic.space.width * 0.5f)
             position.x = -logic.space.width * 0.5f
@@ -47,6 +53,8 @@ class Player {
             position.y = logic.space.height * 0.5f
 
         ship.position = logic.camera.getShipPosition(logic)
+
+        tryPickUpPower(logic)
         checkAsteroidsCollision(logic)
 
         if (shooting)
@@ -54,7 +62,7 @@ class Player {
     }
 
     private fun shoot(logic: GameLogic): Boolean {
-        if (System.currentTimeMillis() - shootTime > 250 && (shootingDirection.x != 0f || shootingDirection.y != 0f)) {
+        if (System.currentTimeMillis() - shootTime > powerState.bulletDelay && (shootingDirection.x != 0f || shootingDirection.y != 0f)) {
             val origin = PointF(position.x, position.y - ship.size * 0.5f * ship.scale)
             Utils.rotatePoint(position.x, position.y, ship.rotation, origin)
 
@@ -63,7 +71,7 @@ class Player {
                             PointF(origin.x, origin.y),
                             shootingDirection,
                             ship.size * 0.1f,
-                            15f
+                            speed * 3 * powerState.bulletSpeedMultiplier
                     )
             )
 
@@ -81,6 +89,8 @@ class Player {
         velocity.x = 0f
         velocity.y = 0f
 
+        speed = ship.size / 11f
+
         shooting = false
         shootingDirection = Vector(0f, 0f)
 
@@ -90,6 +100,19 @@ class Player {
         ship.rotation = 0f
         ship.scale = 1f
         ship.alpha = 255
+
+        powerState.reset()
+    }
+
+    private fun tryPickUpPower(logic: GameLogic) {
+        for (powerUp in logic.space.powerUps) {
+            if (!powerUp.expired && sqrt((position.x - powerUp.position.x) * (position.x - powerUp.position.x) + (position.y - powerUp.position.y) * (position.y - powerUp.position.y)) < powerUp.radius + ship.size * ship.scale * 0.45f) {
+                powerUp.picked = true
+                powerUp.expired = true
+
+                powerState.apply(powerUp.type)
+            }
+        }
     }
 
     private fun checkAsteroidsCollision(logic: GameLogic): Boolean {

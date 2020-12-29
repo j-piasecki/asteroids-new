@@ -7,6 +7,8 @@ import android.view.WindowId
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
+import io.github.breskin.asteroids.game.PowerState
+import io.github.breskin.asteroids.objects.PowerUp
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         enterFullscreen()
+
+        PowerState.Power.load(this)
 
         game_view.resume()
     }
