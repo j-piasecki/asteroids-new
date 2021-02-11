@@ -130,7 +130,7 @@ class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
         logic.player.position.x = 0f
         logic.player.position.y = 0f
 
-        logic.space = Space(width * 3 / 2, height * 3 / 2)
+        logic.space = Space(width * 5 / 4, height * 5 / 4)
 
         controls.resize(width, height)
     }

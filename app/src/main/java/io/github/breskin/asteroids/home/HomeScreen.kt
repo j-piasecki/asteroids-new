@@ -5,8 +5,10 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PointF
+import android.util.Log
 import android.view.MotionEvent
 import io.github.breskin.asteroids.*
+import io.github.breskin.asteroids.controls.ImageButton
 import io.github.breskin.asteroids.controls.ToggleButton
 
 class HomeScreen(screenManager: ScreenManager) : Screen(screenManager) {
@@ -24,7 +26,10 @@ class HomeScreen(screenManager: ScreenManager) : Screen(screenManager) {
     private val buttonMusic = ToggleButton { Config.musicEnabled = it }
     private val buttonVibrations = ToggleButton { Config.vibrationsEnabled = it }
 
-    private val startButton = StartButton() {
+    private val powerUpsButton = ImageButton {  }
+    private val infoButton = ImageButton {  }
+
+    private val startButton = StartButton {
         currentAnimation = AnimationType.Closing
 
         screenManager.target = Type.Game
@@ -46,11 +51,20 @@ class HomeScreen(screenManager: ScreenManager) : Screen(screenManager) {
         buttonMusic.update()
         buttonVibrations.update()
 
+        infoButton.update()
+        powerUpsButton.update()
+
         val margin = (GameView.viewWidth - buttonMusic.size * 4) / 5
         buttonVibrations.position = PointF(margin - GameView.viewWidth * 0.7f * togglesOffset, GameView.size * 0.1f)
         buttonSound.position = PointF(margin * 2 + buttonSound.size - GameView.viewWidth * 0.7f * togglesOffset * togglesOffset, GameView.size * 0.1f)
         buttonMusic.position = PointF(margin * 3 + buttonMusic.size * 2 + GameView.viewWidth * 0.7f * togglesOffset * togglesOffset, GameView.size * 0.1f)
         buttonControls.position = PointF(margin * 4 + buttonControls.size * 3 + GameView.viewWidth * 0.7f * togglesOffset, GameView.size * 0.1f)
+
+        powerUpsButton.position.y = GameView.viewHeight - powerUpsButton.size * 1.25f
+        infoButton.position.y = GameView.viewHeight - infoButton.size * 1.25f
+
+        powerUpsButton.position.x = powerUpsButton.size * 0.25f - togglesOffset * powerUpsButton.size * 1.5f
+        infoButton.position.x = GameView.viewWidth - infoButton.size * (1.25f - togglesOffset * 1.5f)
     }
 
     override fun draw(canvas: Canvas) {
@@ -60,6 +74,9 @@ class HomeScreen(screenManager: ScreenManager) : Screen(screenManager) {
         buttonVibrations.draw(canvas)
 
         startButton.draw(canvas)
+
+        infoButton.draw(canvas)
+        powerUpsButton.draw(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -69,6 +86,9 @@ class HomeScreen(screenManager: ScreenManager) : Screen(screenManager) {
         buttonVibrations.onTouchEvent(event)
 
         startButton.onTouchEvent(event)
+
+        infoButton.onTouchEvent(event)
+        powerUpsButton.onTouchEvent(event)
 
         return true
     }
@@ -97,6 +117,9 @@ class HomeScreen(screenManager: ScreenManager) : Screen(screenManager) {
         )
         buttonSound.imageOn = BitmapFactory.decodeResource(context.resources, R.drawable.sound)
         buttonMusic.imageOn = BitmapFactory.decodeResource(context.resources, R.drawable.music)
+
+        infoButton.image = BitmapFactory.decodeResource(context.resources, R.drawable.info)
+        powerUpsButton.image = BitmapFactory.decodeResource(context.resources, R.drawable.power_up)
 
         buttonControls.toggled = Config.oneHandedControls
         buttonVibrations.toggled = Config.vibrationsEnabled
