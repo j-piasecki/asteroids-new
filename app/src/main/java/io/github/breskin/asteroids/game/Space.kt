@@ -3,9 +3,11 @@ package io.github.breskin.asteroids.game
 import android.graphics.Canvas
 import android.graphics.PointF
 import io.github.breskin.asteroids.GameView
+import io.github.breskin.asteroids.SoundManager
 import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.game.objects.Asteroid
 import io.github.breskin.asteroids.game.objects.Bullet
+import io.github.breskin.asteroids.game.objects.ForceWave
 import io.github.breskin.asteroids.game.objects.PowerUp
 import kotlin.math.pow
 import kotlin.random.Random
@@ -17,6 +19,7 @@ class Space(val width: Int, val height: Int) {
     val asteroids = mutableListOf<Asteroid>()
     val bullets = mutableListOf<Bullet>()
     val powerUps = mutableListOf<PowerUp>()
+    val forceWaves = mutableListOf<ForceWave>()
 
     fun update(logic: GameLogic) {
         if (asteroidTime >= 2000 * 0.88f.pow(logic.gameTime / 20000f + 1)) {
@@ -43,6 +46,11 @@ class Space(val width: Int, val height: Int) {
             powerUp.update(logic)
 
         powerUps.removeAll { it.expired && !it.picked }
+
+        for (forceWave in forceWaves)
+            forceWave.update(logic)
+
+        forceWaves.removeAll { !it.exists }
     }
 
     fun clear(logic: GameLogic, explode: Boolean = true) {
@@ -52,6 +60,7 @@ class Space(val width: Int, val height: Int) {
         asteroids.clear()
         bullets.clear()
         powerUps.clear()
+        forceWaves.clear()
     }
 
     fun addAsteroid(asteroid: Asteroid) {
@@ -64,6 +73,12 @@ class Space(val width: Int, val height: Int) {
 
     fun addPowerUp(powerUp: PowerUp) {
         powerUps.add(powerUp)
+    }
+
+    fun addForceWave(logic: GameLogic, forceWave: ForceWave) {
+        forceWaves.add(forceWave)
+
+        logic.soundManager?.playSound(SoundManager.SoundEffect.ForceWave, 1f)
     }
 
     private fun spawnAsteroid() {
@@ -139,6 +154,10 @@ class Space(val width: Int, val height: Int) {
 
         for (asteroid in asteroids) {
             asteroid.draw(canvas, logic)
+        }
+
+        for (forceWave in forceWaves) {
+            forceWave.draw(canvas, logic)
         }
     }
 }

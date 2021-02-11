@@ -19,8 +19,10 @@ class SoundManager {
 
     private var musicPlaybackId = -1
 
+    private var lastCrashSoundTime = 0L
+
     fun playSound(effect: SoundEffect, volume: Float = 0.5f) {
-        if (!Config.soundEnabled)
+        if (!Config.soundEnabled || (effect == SoundEffect.Crash && System.currentTimeMillis() - lastCrashSoundTime < 30))
             return
 
         var priority = 0
@@ -35,6 +37,9 @@ class SoundManager {
         }
 
         effectsSoundPool.play(id, volume, volume, priority, 0, 1f)
+
+        if (effect == SoundEffect.Crash)
+            lastCrashSoundTime = System.currentTimeMillis()
     }
 
     fun updateMusicPlayback() {

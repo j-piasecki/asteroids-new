@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.R
+import io.github.breskin.asteroids.game.objects.ForceWave
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
@@ -63,7 +64,7 @@ class PowerState {
         }
     }
 
-    fun apply(power: Power) {
+    fun apply(logic: GameLogic, power: Power) {
         when (power) {
             Power.SizeUp -> scale += 0.125f
             Power.SizeDown -> if (scale > MIN_SCALE) scale -= 0.125f
@@ -77,7 +78,7 @@ class PowerState {
             Power.Invulnerability -> invulnerabilityTime = INVULNERABILITY_DURATION
             Power.Bulldozer -> bulldozerTime = BULLDOZER_DURATION
             Power.PiercingBulletsUp -> if (piercingBullets < MAX_PIERCING_BULLETS) piercingBullets++
-
+            Power.ForceWave -> logic.space.addForceWave(logic, ForceWave(PointF(logic.player.position.x, logic.player.position.y)))
 
             else -> if (!powers.contains(power)) powers.add(power)
         }
@@ -172,10 +173,10 @@ class PowerState {
     fun removeShield() = powers.remove(Power.Shield)
 
     enum class Power {
-        SizeUp, SizeDown, SpeedUp, SpeedDown, BulletsUp, BulletSprayUp, BulletSprayDown, AttackSpeedUp, AttackSpeedDown, Shield, Invulnerability, Bulldozer, PiercingBulletsUp;
+        SizeUp, SizeDown, SpeedUp, SpeedDown, BulletsUp, BulletSprayUp, BulletSprayDown, AttackSpeedUp, AttackSpeedDown, Shield, Invulnerability, Bulldozer, PiercingBulletsUp, ForceWave;
 
         companion object {
-            const val AMOUNT = 13
+            const val AMOUNT = 14
 
             private lateinit var sizeUpBitmap: Bitmap
             private lateinit var sizeDownBitmap: Bitmap
@@ -190,6 +191,7 @@ class PowerState {
             private lateinit var invulnerabilityBitmap: Bitmap
             private lateinit var bulldozerBitmap: Bitmap
             private lateinit var piercingBulletsUpBitmap: Bitmap
+            private lateinit var forceWaveBitmap: Bitmap
 
             fun load(context: Context) {
                 sizeUpBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.size_up)
@@ -205,6 +207,7 @@ class PowerState {
                 invulnerabilityBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.invulnerability)
                 bulldozerBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.bulldozer)
                 piercingBulletsUpBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.piercing_bullets)
+                forceWaveBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.force_wave)
             }
 
             fun get(index: Int): Power {
@@ -221,6 +224,7 @@ class PowerState {
                     10 -> Invulnerability
                     11 -> Bulldozer
                     12 -> PiercingBulletsUp
+                    13 -> ForceWave
 
                     else -> SizeUp
                 }
@@ -244,6 +248,7 @@ class PowerState {
                 Invulnerability -> invulnerabilityBitmap
                 Bulldozer -> bulldozerBitmap
                 PiercingBulletsUp -> piercingBulletsUpBitmap
+                ForceWave -> forceWaveBitmap
             }
         }
 

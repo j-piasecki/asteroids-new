@@ -139,7 +139,7 @@ class Player {
                 powerUp.picked = true
                 powerUp.expired = true
 
-                powerState.apply(powerUp.type)
+                powerState.apply(logic, powerUp.type)
             }
         }
     }
