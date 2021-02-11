@@ -13,6 +13,13 @@ class ScreenManager(val particleSystem: ParticleSystem, val context: Context) {
     private var current = Screen.Type.Home
     var target = Screen.Type.None
 
+    var soundManager: SoundManager? = null
+        set(value) {
+            field = value
+
+            gameScreen.setSoundManager(value ?: return)
+        }
+
     val homeScreen = HomeScreen(this)
     val gameScreen = GameScreen(this)
     val scoreScreen = ScoreScreen(this)

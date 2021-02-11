@@ -3,6 +3,7 @@ package io.github.breskin.asteroids.game
 import android.graphics.Canvas
 import android.graphics.PointF
 import io.github.breskin.asteroids.GameView
+import io.github.breskin.asteroids.SoundManager
 import io.github.breskin.asteroids.Utils
 import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.game.objects.Asteroid
@@ -101,6 +102,8 @@ class Player {
                 }
             }
 
+            logic.soundManager?.playSound(SoundManager.SoundEffect.Shoot)
+
             shootTime = System.currentTimeMillis()
             return true
         }
@@ -178,6 +181,7 @@ class Player {
             powerState.removeShield()
 
             logic.vibrate(75)
+            logic.soundManager?.playSound(SoundManager.SoundEffect.ShieldPop)
 
             asteroid.destroy()
             asteroid.explode(logic, drop = false, split = false)
@@ -187,6 +191,7 @@ class Player {
             logic.finishGame()
 
             logic.vibrate(100)
+            logic.soundManager?.playSound(SoundManager.SoundEffect.Explode)
         }
 
         return true

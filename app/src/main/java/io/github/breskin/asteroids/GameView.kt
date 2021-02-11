@@ -91,6 +91,10 @@ class GameView : SurfaceView, Runnable, SurfaceHolder.Callback {
         return screenManager.onBackPressed()
     }
 
+    fun setSoundManager(soundManager: SoundManager) {
+        screenManager.soundManager = soundManager
+    }
+
     override fun surfaceCreated(holder: SurfaceHolder) {
 
     }

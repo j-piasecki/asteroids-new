@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.Screen
 import io.github.breskin.asteroids.ScreenManager
+import io.github.breskin.asteroids.SoundManager
 import io.github.breskin.asteroids.controls.PauseResumeButton
 import kotlin.math.abs
 
@@ -96,6 +97,10 @@ class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
         }
 
         return true
+    }
+
+    fun setSoundManager(soundManager: SoundManager) {
+        logic.soundManager = soundManager
     }
 
     override fun open() {

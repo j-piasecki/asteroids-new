@@ -10,16 +10,25 @@ import io.github.breskin.asteroids.game.PowerState
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val soundManager = SoundManager()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Config.load(this)
+        soundManager.load(this)
+        Config.setMusicChangedCallback {
+            soundManager.updateMusicPlayback()
+        }
 
         setContentView(R.layout.activity_main)
+        game_view.setSoundManager(soundManager)
     }
 
     override fun onResume() {
         super.onResume()
         enterFullscreen()
+        soundManager.updateMusicPlayback()
 
         PowerState.Power.load(this)
 
@@ -30,6 +39,13 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
 
         game_view.pause()
+        soundManager.stopMusic()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        soundManager.unload()
     }
 
     override fun onBackPressed() {

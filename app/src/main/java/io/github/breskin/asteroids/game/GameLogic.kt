@@ -7,6 +7,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import io.github.breskin.asteroids.Config
 import io.github.breskin.asteroids.GameView
+import io.github.breskin.asteroids.SoundManager
 import io.github.breskin.asteroids.particles.ParticleSystem
 
 class GameLogic(val particleSystem: ParticleSystem, val context: Context) {
@@ -21,6 +22,8 @@ class GameLogic(val particleSystem: ParticleSystem, val context: Context) {
 
     var gameFinished = false
     var gamePaused = false
+
+    var soundManager: SoundManager? = null
 
     fun update() {
         player.update(this)

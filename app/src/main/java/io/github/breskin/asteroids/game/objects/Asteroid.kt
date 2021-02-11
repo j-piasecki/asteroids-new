@@ -4,6 +4,7 @@ import android.graphics.*
 import android.os.Build
 import android.util.Log
 import io.github.breskin.asteroids.GameView
+import io.github.breskin.asteroids.SoundManager
 import io.github.breskin.asteroids.Utils
 import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.game.GameLogic
@@ -113,6 +114,10 @@ class Asteroid(position: PointF, direction: Vector, speed: Float, val radius: Fl
 
         if (split && radius * 0.65f > GameView.size * 0.06f) {
             spawn(logic)
+        }
+
+        if (sound) {
+            logic.soundManager?.playSound(SoundManager.SoundEffect.Crash, 0.2f)
         }
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)

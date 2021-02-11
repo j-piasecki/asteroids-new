@@ -16,6 +16,11 @@ object Config {
     private var _soundEnabled = true
     private var _oneHandedControls = false
 
+    private var musicChangedCallback: (() -> Unit)? = null
+
+    fun setMusicChangedCallback(callback: () -> Unit) {
+        this.musicChangedCallback = callback
+    }
 
     fun load(context: Context) {
         preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
@@ -40,6 +45,8 @@ object Config {
             _musicEnabled = value
 
             preferences.edit().putBoolean(MUSIC, value).apply()
+
+            musicChangedCallback?.invoke()
         }
 
     var soundEnabled
