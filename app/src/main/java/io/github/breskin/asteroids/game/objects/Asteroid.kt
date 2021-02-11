@@ -2,6 +2,7 @@ package io.github.breskin.asteroids.game.objects
 
 import android.graphics.*
 import android.os.Build
+import android.util.Log
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.Utils
 import io.github.breskin.asteroids.controls.Vector
@@ -24,6 +25,7 @@ class Asteroid(position: PointF, direction: Vector, speed: Float, val radius: Fl
 
     companion object {
         private val paint = Paint()
+        private var dropChance = 0f
 
         init {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -98,9 +100,10 @@ class Asteroid(position: PointF, direction: Vector, speed: Float, val radius: Fl
     fun explode(logic: GameLogic, drop: Boolean = true, split: Boolean = true, sound: Boolean = true) {
         val timeMultiplier = 0.95f.pow(logic.gameTime / 20000 + 1)
 
-        if (drop) {
-            logic.score++
+        dropChance += 0.001f
+        logic.score++
 
+        if (drop && Random.nextFloat() < 1 / log2(logic.gameTime * 0.25f)) {
             var power = Random.nextInt(PowerState.Power.AMOUNT)
             while (!logic.player.powerState.canUse(PowerState.Power.get(power)))
                 power = (power + 1) % PowerState.Power.AMOUNT

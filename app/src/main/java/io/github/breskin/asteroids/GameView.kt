@@ -31,7 +31,7 @@ class GameView : SurfaceView, Runnable, SurfaceHolder.Callback {
     private var threadRunning = false
 
     private val particleSystem = ParticleSystem()
-    private val screenManager = ScreenManager(particleSystem)
+    private val screenManager = ScreenManager(particleSystem, context)
 
     constructor(context: Context) : super(context) { screenManager.load(context) }
     constructor(context: Context, attributes: AttributeSet) : super(context, attributes) { screenManager.load(context) }

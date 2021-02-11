@@ -8,7 +8,7 @@ import io.github.breskin.asteroids.game.GameScreen
 import io.github.breskin.asteroids.home.HomeScreen
 import io.github.breskin.asteroids.particles.ParticleSystem
 
-class ScreenManager(val particleSystem: ParticleSystem) {
+class ScreenManager(val particleSystem: ParticleSystem, val context: Context) {
 
     private var current = Screen.Type.Home
     var target = Screen.Type.None

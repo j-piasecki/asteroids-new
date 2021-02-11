@@ -22,21 +22,21 @@ class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
     private val controls = Controls()
     private val pauseResumeButton = PauseResumeButton()
 
-    private var backPressedFinishGane = false
+    private var backPressedFinishGame = false
 
-    val logic = GameLogic(screenManager.particleSystem)
+    val logic = GameLogic(screenManager.particleSystem, screenManager.context)
 
     init {
         paint.isAntiAlias = true
     }
 
     override fun update() {
-        if (backPressedFinishGane) {
+        if (backPressedFinishGame) {
             pauseResumeButton.paused = false
             logic.gamePaused = false
             logic.finishGame()
 
-            backPressedFinishGane = false
+            backPressedFinishGame = false
         }
 
         pauseResumeButton.update(logic)
@@ -89,7 +89,7 @@ class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
 
     override fun onBackPressed(): Boolean {
         if (logic.gamePaused) {
-            backPressedFinishGane = true
+            backPressedFinishGame = true
         } else {
             pauseResumeButton.paused = true
             logic.gamePaused = true

@@ -177,12 +177,16 @@ class Player {
         } else if (powerState.hasShield()) {
             powerState.removeShield()
 
+            logic.vibrate(75)
+
             asteroid.destroy()
             asteroid.explode(logic, drop = false, split = false)
 
             return false
         } else {
             logic.finishGame()
+
+            logic.vibrate(100)
         }
 
         return true

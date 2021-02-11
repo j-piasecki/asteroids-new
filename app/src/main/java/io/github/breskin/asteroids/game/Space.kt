@@ -7,24 +7,24 @@ import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.game.objects.Asteroid
 import io.github.breskin.asteroids.game.objects.Bullet
 import io.github.breskin.asteroids.game.objects.PowerUp
+import kotlin.math.pow
 import kotlin.random.Random
 
 class Space(val width: Int, val height: Int) {
 
-    private var counter = 0
+    private var asteroidTime = 0f
     private val asteroidsToAdd = mutableListOf<Asteroid>()
     val asteroids = mutableListOf<Asteroid>()
     val bullets = mutableListOf<Bullet>()
     val powerUps = mutableListOf<PowerUp>()
 
     fun update(logic: GameLogic) {
-        if (counter == 0) {
-            counter = 60
-
+        if (asteroidTime >= 2000 * 0.88f.pow(logic.gameTime / 20000f + 1)) {
+            asteroidTime = 0f
             spawnAsteroid()
         }
 
-        counter--
+        asteroidTime += logic.speed * GameView.frameTime
 
         for (asteroid in asteroids)
             asteroid.update(logic)

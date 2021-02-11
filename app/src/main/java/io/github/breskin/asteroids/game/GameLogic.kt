@@ -1,10 +1,15 @@
 package io.github.breskin.asteroids.game
 
+import android.content.Context
 import android.graphics.Canvas
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import io.github.breskin.asteroids.Config
 import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.particles.ParticleSystem
 
-class GameLogic(val particleSystem: ParticleSystem) {
+class GameLogic(val particleSystem: ParticleSystem, val context: Context) {
 
     var space = Space(0, 0)
     val camera = Camera()
@@ -54,5 +59,17 @@ class GameLogic(val particleSystem: ParticleSystem) {
             player.explode(this)
             space.clear(this)
         }
+    }
+
+    fun vibrate(time: Int) {
+        if (!Config.vibrationsEnabled)
+            return
+
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            vibrator.vibrate(VibrationEffect.createOneShot(time.toLong(), VibrationEffect.DEFAULT_AMPLITUDE))
+        else
+            vibrator.vibrate(time.toLong())
     }
 }
