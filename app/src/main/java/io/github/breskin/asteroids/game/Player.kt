@@ -27,6 +27,9 @@ class Player {
     var shooting = false
     private var shootTime = 0L
 
+    val bulletSpeed: Float
+        get() = speed * 3 * powerState.bulletSpeedMultiplier
+
     fun draw(canvas: Canvas) {
         ship.draw(canvas)
         powerState.draw(canvas, this)
@@ -87,7 +90,7 @@ class Player {
                             PointF(origin.x, origin.y),
                             Utils.rotateVector(shootingDirection, -(anglePerBullet * i + startAngle) * Math.PI.toFloat() / 180f),
                             ship.size * 0.1f,
-                            speed * 3 * powerState.bulletSpeedMultiplier
+                            bulletSpeed
                         )
                     )
                 } else {
@@ -96,7 +99,7 @@ class Player {
                             PointF(origin.x, origin.y),
                             Utils.rotateVector(shootingDirection, -(anglePerBullet * i + startAngle) * Math.PI.toFloat() / 180f),
                             ship.size * 0.1f,
-                            speed * 3 * powerState.bulletSpeedMultiplier
+                            bulletSpeed
                         )
                     )
                 }

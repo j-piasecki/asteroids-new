@@ -6,7 +6,7 @@ import io.github.breskin.asteroids.GameView
 import io.github.breskin.asteroids.controls.Vector
 import io.github.breskin.asteroids.game.GameLogic
 
-abstract class Projectile(val position: PointF, protected val direction: Vector, protected val speed: Float) {
+abstract class Projectile(val position: PointF, val direction: Vector, val speed: Float) {
 
     private var toDelete = false
 

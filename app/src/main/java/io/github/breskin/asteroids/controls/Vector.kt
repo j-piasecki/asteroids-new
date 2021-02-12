@@ -1,5 +1,6 @@
 package io.github.breskin.asteroids.controls
 
+import kotlin.math.atan2
 import kotlin.math.sqrt
 
 class Vector(var x: Float, var y: Float) {
@@ -13,6 +14,11 @@ class Vector(var x: Float, var y: Float) {
             result.normalize()
 
             return result
+        }
+
+    val angle: Float
+        get() {
+            return (-(atan2(x, y) + Math.PI)).toFloat()
         }
 
     fun normalize() {

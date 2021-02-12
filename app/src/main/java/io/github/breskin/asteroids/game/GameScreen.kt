@@ -53,7 +53,7 @@ class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
             currentAnimation = AnimationType.None
 
         if (currentAnimation == AnimationType.None)
-            controls.apply(logic.player)
+            controls.apply(logic)
 
         logic.update()
 
