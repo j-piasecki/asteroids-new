@@ -11,13 +11,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var scoreManager: ScoreManager
+
     private val soundManager = SoundManager()
-    private lateinit var bottomSheetManager: BottomSheetManager
+    private val bottomSheetManager = BottomSheetManager(this) { enterFullscreen() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Config.load(this)
+        scoreManager = ScoreManager(this)
+
+        Config.load(this, scoreManager)
+
         soundManager.load(this)
         Config.setMusicChangedCallback {
             soundManager.updateMusicPlayback()
@@ -25,9 +30,8 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        bottomSheetManager = BottomSheetManager(this) { enterFullscreen() }
-
         game_view.setSoundManager(soundManager)
+        game_view.setScoreManager(scoreManager)
         game_view.setBottomSheetManager(bottomSheetManager)
     }
 

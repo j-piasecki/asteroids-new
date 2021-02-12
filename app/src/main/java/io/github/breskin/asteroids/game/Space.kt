@@ -14,7 +14,7 @@ import kotlin.random.Random
 
 class Space(val width: Int, val height: Int) {
 
-    private var asteroidTime = 0f
+    private var asteroidTime = 1000f
     private val asteroidsToAdd = mutableListOf<Asteroid>()
     val asteroids = mutableListOf<Asteroid>()
     val bullets = mutableListOf<Bullet>()
@@ -61,6 +61,8 @@ class Space(val width: Int, val height: Int) {
         bullets.clear()
         powerUps.clear()
         forceWaves.clear()
+
+        asteroidTime = 1000f
     }
 
     fun addAsteroid(asteroid: Asteroid) {

@@ -2,6 +2,7 @@ package io.github.breskin.asteroids
 
 import android.content.Context
 import android.content.SharedPreferences
+import kotlinx.coroutines.GlobalScope
 
 object Config {
     private const val SOUND = "sound"
@@ -22,13 +23,21 @@ object Config {
         this.musicChangedCallback = callback
     }
 
-    fun load(context: Context) {
+    fun load(context: Context, scoreManager: ScoreManager) {
         preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
         _vibrationsEnabled = preferences.getBoolean(VIBRATIONS, true)
         _musicEnabled = preferences.getBoolean(MUSIC, true)
         _soundEnabled = preferences.getBoolean(SOUND, true)
         _oneHandedControls = preferences.getBoolean(CONTROLS, false)
+
+        if (preferences.getLong("best-time", -1L) != -1L) {
+            val time = preferences.getLong("best-time", -1L).toInt()
+
+            scoreManager.saveResult(0, time)
+
+            preferences.edit().putLong("best-time", -1L).apply()
+        }
     }
 
     var vibrationsEnabled

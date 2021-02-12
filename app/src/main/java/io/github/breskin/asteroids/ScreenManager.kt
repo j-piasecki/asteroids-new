@@ -21,6 +21,7 @@ class ScreenManager(val particleSystem: ParticleSystem, val context: Context) {
         }
 
     var bottomSheetManager: BottomSheetManager? = null
+    var scoreManager: ScoreManager? = null
 
     val homeScreen = HomeScreen(this)
     val gameScreen = GameScreen(this)

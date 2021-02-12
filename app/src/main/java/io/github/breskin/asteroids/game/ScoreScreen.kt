@@ -19,11 +19,16 @@ class ScoreScreen(screenManager: ScreenManager) : Screen(screenManager) {
     private var gameTime = 0
     private var touchDown = false
 
+    private var bestTime = false
+    private var bestScore = false
+
     private var animationProgress = 0f
     private var scoreTranslation = 0f
     private var scoreAnimationProgress = 1f
 
     private lateinit var tapAnywhereText: String
+    private lateinit var bestTimeText: String
+    private lateinit var bestScoreText: String
 
     init {
         paint.isAntiAlias = true
@@ -39,6 +44,25 @@ class ScoreScreen(screenManager: ScreenManager) : Screen(screenManager) {
         canvas.drawText(score.toString(), (GameView.viewWidth - paint.measureText(score.toString())) * 0.5f, paint.textSize * (scoreAnimationProgress * 0.5f + 1) * 1.1f - scoreTranslation, paint)
 
         paint.color = Color.argb((animationProgress * 255).roundToInt(), 255, 255, 255)
+        var margin = paint.textSize * (scoreAnimationProgress * 0.5f + 1) * 1.1f + GameView.viewHeight * 0.1f - scoreTranslation
+
+        paint.textSize = GameView.size * 0.05f * (animationProgress + 1)
+        canvas.drawText(Utils.timeToString(gameTime / 1000), (GameView.viewWidth - paint.measureText(Utils.timeToString(gameTime / 1000))) * 0.5f,
+                paint.textSize + margin - GameView.size * 0.15f * (1 - animationProgress * animationProgress), paint)
+
+        margin += paint.textSize * 1.5f
+
+        val scoreText = if (bestScore) bestScoreText + "!" else bestScoreText + ": " + (screenManager.scoreManager?.bestScore ?: score)
+        val timeText = if (bestTime) bestTimeText + "!" else bestTimeText + ": " + Utils.timeToString((screenManager.scoreManager?.bestTime ?: 0) / 1000)
+
+        paint.textSize = GameView.size * 0.03f * (animationProgress + 1)
+        canvas.drawText(timeText, (GameView.viewWidth - paint.measureText(timeText)) * 0.5f,
+                paint.textSize + margin - GameView.size * 0.15f * (1 - animationProgress * animationProgress), paint)
+
+        margin += paint.textSize * 1.3f
+        canvas.drawText(scoreText, (GameView.viewWidth - paint.measureText(scoreText)) * 0.5f,
+                paint.textSize + margin - GameView.size * 0.15f * (1 - animationProgress * animationProgress), paint)
+
 
         Utils.fitFontSize(paint, tapAnywhereText, GameView.size * 0.025f * (animationProgress + 1), GameView.viewWidth * 0.8f)
         canvas.drawText(tapAnywhereText, (GameView.viewWidth - paint.measureText(tapAnywhereText)) * 0.5f, GameView.viewHeight - paint.textSize * (animationProgress * 0.5f + 1), paint)
@@ -47,6 +71,11 @@ class ScoreScreen(screenManager: ScreenManager) : Screen(screenManager) {
     fun getScores(logic: GameLogic) {
         score = logic.score
         gameTime = logic.gameTime.roundToInt()
+
+        bestScore = screenManager.scoreManager?.isBestScore(score) ?: false
+        bestTime = screenManager.scoreManager?.isBestTime(gameTime) ?: false
+
+        screenManager.scoreManager?.saveResult(score, gameTime)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -95,5 +124,7 @@ class ScoreScreen(screenManager: ScreenManager) : Screen(screenManager) {
 
     override fun load(context: Context) {
         tapAnywhereText = context.getString(R.string.tap_anywhere_to_play_again)
+        bestTimeText = context.getString(R.string.best_time_text)
+        bestScoreText = context.getString(R.string.best_score_text)
     }
 }

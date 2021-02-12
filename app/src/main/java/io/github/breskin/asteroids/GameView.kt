@@ -99,6 +99,10 @@ class GameView : SurfaceView, Runnable, SurfaceHolder.Callback {
         screenManager.bottomSheetManager = bottomSheetManager
     }
 
+    fun setScoreManager(scoreManager: ScoreManager) {
+        screenManager.scoreManager = scoreManager
+    }
+
     override fun surfaceCreated(holder: SurfaceHolder) {
 
     }
