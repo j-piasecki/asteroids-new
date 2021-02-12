@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tap_anywhere_to_play_again">Dotknij ekranu, aby zagrać ponownie</string>
+    <string name="game_paused_text">Wstrzymano</string>
+    <string name="best_time_text">Najlepszy czas</string>
+    <string name="best_score_text">Najlepszy wynik</string>
+
+    <string name="info_credits">Przypisy</string>
+    <string name="info_music">Muzyka</string>
+    <string name="info_sound">SEfekty dźwiękowe</string>
+    <string name="info_music_content" translatable="false">Eric Skiff\nA Night Of Dizzy Spells\nResistor Anthems\nAvailable at http://EricSkiff.com/music</string>
+    <string name="info_sound_content" translatable="false">https://www.zapsplat.com</string>
+    <string name="info_twitter">Możesz obserwować mnie na twitterze \@breskin67</string>
+
+    <string name="power_ups_header">Ulepszenia</string>
+    <string name="power_speed_up">Zwiększenie prędkości</string>
+    <string name="power_speed_down">Zmniejszenie prędkości</string>
+    <string name="power_size_up">Zwiększenie rozmiaru</string>
+    <string name="power_size_down">Zmniejszenie rozmiaru</string>
+    <string name="power_bullet_stream_up">Dodatkowy strumień pocisków</string>
+    <string name="power_bullet_spray_up">Zwiększenie kąta pomiędzy pociskami</string>
+    <string name="power_bullet_spray_down">Zmniejszenie kąta pomiędzy pociskami</string>
+    <string name="power_attack_speed_up">Zwiększenie prędkości ataku</string>
+    <string name="power_attack_speed_down">Zmniejszenie prędkości ataku</string>
+    <string name="power_shield">Tarcza chroniąca przed kolizją z asteroidą (ulega zniszczeniu przy zderzeniu)</string>
+    <string name="power_invulnerability">Możesz bez przeszkód poruszać się pośród asteroid bez kolizji przez krótki czas</string>
+    <string name="power_bulldozer">Przez krótki czas, każda asteroida z którą się zderzysz eksploduje</string>
+    <string name="power_double_bullets">Zwiększenie ilości wiązek pocisków, które przebijają się po zderzeniu z asteroidą</string>
+    <string name="power_force_wave">Fala siły, która niszczy wszystkie asteroidy</string>
+</resources>

@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Asteroids</string>
-    <string name="button_start">Start</string>
+    <string name="app_name" translatable="false">Asteroids</string>
+    <string name="button_start" translatable="false">Start</string>
     <string name="tap_anywhere_to_play_again">Tap anywhere to play again</string>
     <string name="game_paused_text">Paused</string>
     <string name="best_time_text">Best time</string>
