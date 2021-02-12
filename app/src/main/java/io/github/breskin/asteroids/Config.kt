@@ -15,7 +15,7 @@ object Config {
     private var _vibrationsEnabled = true
     private var _musicEnabled = true
     private var _soundEnabled = true
-    private var _oneHandedControls = false
+    private var _oneHandedControls = true
 
     private var musicChangedCallback: (() -> Unit)? = null
 
@@ -29,7 +29,7 @@ object Config {
         _vibrationsEnabled = preferences.getBoolean(VIBRATIONS, true)
         _musicEnabled = preferences.getBoolean(MUSIC, true)
         _soundEnabled = preferences.getBoolean(SOUND, true)
-        _oneHandedControls = preferences.getBoolean(CONTROLS, false)
+        _oneHandedControls = preferences.getBoolean(CONTROLS, true)
 
         if (preferences.getLong("best-time", -1L) != -1L) {
             val time = preferences.getLong("best-time", -1L).toInt()
