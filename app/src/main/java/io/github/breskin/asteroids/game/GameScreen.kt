@@ -5,12 +5,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
-import io.github.breskin.asteroids.GameView
-import io.github.breskin.asteroids.Screen
-import io.github.breskin.asteroids.ScreenManager
-import io.github.breskin.asteroids.SoundManager
+import io.github.breskin.asteroids.*
 import io.github.breskin.asteroids.controls.PauseResumeButton
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
 
@@ -24,6 +22,8 @@ class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
     private val pauseResumeButton = PauseResumeButton()
 
     private var backPressedFinishGame = false
+
+    private lateinit var pausedText: String
 
     val logic = GameLogic(screenManager.particleSystem, screenManager.context)
 
@@ -72,6 +72,9 @@ class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
 
         pauseResumeButton.draw(canvas)
         drawPoints(canvas)
+
+        if (logic.gamePaused || logic.speed < 0.975f)
+            drawPausedText(canvas)
     }
 
     private fun drawPoints(canvas: Canvas) {
@@ -79,6 +82,13 @@ class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
         paint.textSize = GameView.size * 0.1f * (finishAnimationProgress + 1)
 
         canvas.drawText(logic.score.toString(), (GameView.viewWidth - paint.measureText(logic.score.toString())) * 0.5f, paint.textSize * (finishAnimationProgress * 0.5f + 1) * 1.1f - pointsTranslation, paint)
+    }
+
+    private fun drawPausedText(canvas: Canvas) {
+        paint.color = Color.argb((255 * (1 - logic.speed)).roundToInt(), 220, 220, 220)
+        paint.textSize = GameView.size * 0.1f * (finishAnimationProgress + 1)
+
+        canvas.drawText(pausedText, (GameView.viewWidth - paint.measureText(pausedText)) * 0.5f, paint.textSize + GameView.size * 0.2f, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -120,7 +130,7 @@ class GameScreen(screenManager: ScreenManager) : Screen(screenManager) {
     }
 
     override fun load(context: Context) {
-
+        pausedText = context.getString(R.string.game_paused_text)
     }
 
     override fun onSizeChanged(width: Int, height: Int) {
