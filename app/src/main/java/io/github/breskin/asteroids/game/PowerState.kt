@@ -193,6 +193,21 @@ class PowerState {
             private lateinit var piercingBulletsUpBitmap: Bitmap
             private lateinit var forceWaveBitmap: Bitmap
 
+            private lateinit var sizeUpString: String
+            private lateinit var sizeDownString: String
+            private lateinit var speedUpString: String
+            private lateinit var speedDownString: String
+            private lateinit var bulletsUpString: String
+            private lateinit var bulletSprayUpString: String
+            private lateinit var bulletSprayDownString: String
+            private lateinit var attackSpeedUpString: String
+            private lateinit var attackSpeedDownString: String
+            private lateinit var shieldString: String
+            private lateinit var invulnerabilityString: String
+            private lateinit var bulldozerString: String
+            private lateinit var piercingBulletsUpString: String
+            private lateinit var forceWaveString: String
+
             fun load(context: Context) {
                 sizeUpBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.size_up)
                 sizeDownBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.size_down)
@@ -208,6 +223,21 @@ class PowerState {
                 bulldozerBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.bulldozer)
                 piercingBulletsUpBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.piercing_bullets)
                 forceWaveBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.force_wave)
+
+                sizeUpString = context.getString(R.string.power_size_up)
+                sizeDownString = context.getString(R.string.power_size_down)
+                speedUpString = context.getString(R.string.power_speed_up)
+                speedDownString = context.getString(R.string.power_speed_down)
+                bulletsUpString = context.getString(R.string.power_bullet_stream_up)
+                bulletSprayUpString = context.getString(R.string.power_bullet_spray_up)
+                bulletSprayDownString = context.getString(R.string.power_bullet_spray_down)
+                attackSpeedUpString = context.getString(R.string.power_attack_speed_up)
+                attackSpeedDownString = context.getString(R.string.power_attack_speed_down)
+                shieldString = context.getString(R.string.power_shield)
+                invulnerabilityString = context.getString(R.string.power_invulnerability)
+                bulldozerString = context.getString(R.string.power_bulldozer)
+                piercingBulletsUpString = context.getString(R.string.power_double_bullets)
+                forceWaveString = context.getString(R.string.power_force_wave)
             }
 
             fun get(index: Int): Power {
@@ -249,6 +279,25 @@ class PowerState {
                 Bulldozer -> bulldozerBitmap
                 PiercingBulletsUp -> piercingBulletsUpBitmap
                 ForceWave -> forceWaveBitmap
+            }
+        }
+
+        fun getDescription(): String {
+            return when (this) {
+                SizeUp -> sizeUpString
+                SizeDown -> sizeDownString
+                SpeedUp -> speedUpString
+                SpeedDown -> speedDownString
+                BulletsUp -> bulletsUpString
+                BulletSprayUp -> bulletSprayUpString
+                BulletSprayDown -> bulletSprayDownString
+                AttackSpeedUp -> attackSpeedUpString
+                AttackSpeedDown -> attackSpeedDownString
+                Shield -> shieldString
+                Invulnerability -> invulnerabilityString
+                Bulldozer -> bulldozerString
+                PiercingBulletsUp -> piercingBulletsUpString
+                ForceWave -> forceWaveString
             }
         }
 

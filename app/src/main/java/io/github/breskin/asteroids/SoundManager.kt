@@ -22,7 +22,7 @@ class SoundManager {
     private var lastCrashSoundTime = 0L
 
     fun playSound(effect: SoundEffect, volume: Float = 0.5f) {
-        if (!Config.soundEnabled || (effect == SoundEffect.Crash && System.currentTimeMillis() - lastCrashSoundTime < 30))
+        if (!Config.soundEnabled || (effect == SoundEffect.Crash && System.currentTimeMillis() - lastCrashSoundTime < 80))
             return
 
         var priority = 0

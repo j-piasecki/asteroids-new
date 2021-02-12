@@ -2,4 +2,27 @@
     <string name="app_name">Asteroids</string>
     <string name="button_start">Start</string>
     <string name="tap_anywhere_to_play_again">Tap anywhere to play again</string>
+
+    <string name="info_credits">Credits</string>
+    <string name="info_music">Music</string>
+    <string name="info_sound">Sound effects</string>
+    <string name="info_music_content" translatable="false">Eric Skiff\nA Night Of Dizzy Spells\nResistor Anthems\nAvailable at http://EricSkiff.com/music</string>
+    <string name="info_sound_content" translatable="false">https://www.zapsplat.com</string>
+    <string name="info_twitter">You can follow me on twitter \@breskin67</string>
+
+    <string name="power_ups_header">Upgrades</string>
+    <string name="power_speed_up">Speed up</string>
+    <string name="power_speed_down">Speed down</string>
+    <string name="power_size_up">Size up</string>
+    <string name="power_size_down">Size down</string>
+    <string name="power_bullet_stream_up">Additional bullet stream</string>
+    <string name="power_bullet_spray_up">Bigger angle between bullets</string>
+    <string name="power_bullet_spray_down">Smaller angle between bullets</string>
+    <string name="power_attack_speed_up">Attack speed up</string>
+    <string name="power_attack_speed_down">Attack speed down</string>
+    <string name="power_shield">Shield protecting you from collision with an asteroid (breaks on impact)</string>
+    <string name="power_invulnerability">You can move freely among asteroids without colliding them for a short amount of time</string>
+    <string name="power_bulldozer">For a short time every asteroid you collide with explodes</string>
+    <string name="power_double_bullets">Increase amount of bullet streams that pierce first asteroid they hit</string>
+    <string name="power_force_wave">A wave of force that destroys all asteroids</string>
 </resources>

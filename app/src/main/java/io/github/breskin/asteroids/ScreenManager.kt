@@ -20,6 +20,8 @@ class ScreenManager(val particleSystem: ParticleSystem, val context: Context) {
             gameScreen.setSoundManager(value ?: return)
         }
 
+    var bottomSheetManager: BottomSheetManager? = null
+
     val homeScreen = HomeScreen(this)
     val gameScreen = GameScreen(this)
     val scoreScreen = ScoreScreen(this)

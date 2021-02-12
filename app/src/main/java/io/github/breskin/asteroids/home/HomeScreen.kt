@@ -26,8 +26,8 @@ class HomeScreen(screenManager: ScreenManager) : Screen(screenManager) {
     private val buttonMusic = ToggleButton { Config.musicEnabled = it }
     private val buttonVibrations = ToggleButton { Config.vibrationsEnabled = it }
 
-    private val powerUpsButton = ImageButton {  }
-    private val infoButton = ImageButton {  }
+    private val powerUpsButton = ImageButton { screenManager.bottomSheetManager?.openPowerUpsDialog() }
+    private val infoButton = ImageButton { screenManager.bottomSheetManager?.openInfoDialog() }
 
     private val startButton = StartButton {
         currentAnimation = AnimationType.Closing

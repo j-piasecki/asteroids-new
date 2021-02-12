@@ -95,6 +95,10 @@ class GameView : SurfaceView, Runnable, SurfaceHolder.Callback {
         screenManager.soundManager = soundManager
     }
 
+    fun setBottomSheetManager(bottomSheetManager: BottomSheetManager) {
+        screenManager.bottomSheetManager = bottomSheetManager
+    }
+
     override fun surfaceCreated(holder: SurfaceHolder) {
 
     }
